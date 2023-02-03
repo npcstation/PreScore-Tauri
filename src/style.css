@@ -4,8 +4,6 @@
   line-height: 24px;
   font-weight: 400;
 
-  margin: 16px;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -16,4 +14,9 @@
 .horizontal-center {
   margin: 0 auto;
   display: block !important;
+}
+
+.n-layout-sider-scroll-container {
+  overflow: clip !important;
+  height: 100%;
 }

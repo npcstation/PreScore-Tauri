@@ -12,7 +12,7 @@ use reqwest::{
 };
 use reqwest_cookie_store::CookieStoreMutex;
 use serde_json::{Map, Value};
-use std::sync::{Arc, Mutex};
+use std::{sync::{Arc, Mutex}};
 use std::path::PathBuf;
 
 static COOKIE_DIR: Lazy<PathBuf> = Lazy::new(|| {
@@ -75,11 +75,11 @@ async fn get_cookie(domain: String, path: String, name: String) -> Result<String
 }
 
 #[tauri::command]
-async fn http_get(
+async fn http_get_binary(
     mut url: String,
     headers_map: Option<Map<String, Value>>,
     query: Option<Map<String, Value>>,
-) -> Result<String, String> {
+) -> Result<Vec<u8>, String> {
     match query {
         Some(query_map) => {
             url.push_str("?");
@@ -109,19 +109,19 @@ async fn http_get(
     let body = request_builder.headers(headers).send().await;
     match body {
         Ok(response) => {
-            let resp_text_result = response.text().await;
+            let resp_result = response.bytes().await;
 
             let mut writer = std::fs::File::create(COOKIE_PATH.clone())
                 .map(std::io::BufWriter::new)
                 .unwrap();
             let store = COOKIE_STORE.lock().unwrap();
             store.save_json(&mut writer).unwrap();
-            for c in store.iter_any() {
-                println!("{:?}", c);
-            }
-            match resp_text_result {
-                Ok(resp_text) => {
-                    return Ok(resp_text);
+            // for c in store.iter_any() {
+            //     println!("{:?}", c);
+            // }
+            match resp_result {
+                Ok(resp) => {
+                    return Ok(resp.to_vec());
                 }
                 Err(err) => {
                     return Err(err.to_string());
@@ -130,6 +130,23 @@ async fn http_get(
         }
         Err(err) => {
             return Err(err.to_string());
+        }
+    }
+}
+
+#[tauri::command]
+async fn http_get(
+    url: String,
+    headers_map: Option<Map<String, Value>>,
+    query: Option<Map<String, Value>>,
+) -> Result<String, String> {
+    let resp: Result<Vec<u8>, String> = http_get_binary(url, headers_map, query).await;
+    match resp {
+        Ok(resp) => {
+            return Ok(String::from_utf8(resp).unwrap());
+        }
+        Err(err) => {
+            return Err(err);
         }
     }
 }
@@ -173,9 +190,9 @@ async fn http_post(
                     .map(std::io::BufWriter::new)
                     .unwrap();
                 let store = COOKIE_STORE.lock().unwrap();
-                for c in store.iter_any() {
-                    println!("{:?}", c);
-                }
+                // for c in store.iter_any() {
+                //     println!("{:?}", c);
+                // }
                 store.save_json(&mut writer).unwrap();
 
                 match resp_text_result {
@@ -219,7 +236,7 @@ async fn http_post(
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![get_cookie, http_get, http_post])
+        .invoke_handler(tauri::generate_handler![get_cookie, http_get_binary, http_get, http_post])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
