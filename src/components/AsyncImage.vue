@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { c, NImage } from "naive-ui";
 import { ref } from "vue";
-import { invoke } from "@tauri-apps/api/tauri";
+import { HTTP } from "../utils/http";
 
 const props = defineProps([
   "src",
@@ -12,13 +11,7 @@ const props = defineProps([
 const placeholder = ref(props.placeholder);
 const image = ref(placeholder.value);
 try {
-  const response: Array<number> = await invoke("http_get_binary", {
-    url: props.src,
-  });
-  const response_u8 = new Uint8Array(response);
-  console.log(response);
-  let blob = new Blob([response_u8], { type: "image/jpeg" });
-  let fileURL = URL.createObjectURL(blob);
+  const fileURL = await HTTP.getBlob(props.src, "image/jpeg");
   image.value = fileURL;
 } catch (err) {
   console.log(err);

@@ -12,10 +12,16 @@ import { ref, Ref } from "vue";
 // import { useInfiniteScroll } from "@vueuse/core";
 import { defineAsyncComponent } from "vue";
 import { invoke } from "@tauri-apps/api/tauri";
-import { Exam } from "../util/struct";
+import { Exam } from "../utils/struct";
 import { DateTime } from "luxon";
+import { useRouter } from "vue-router";
+import { HTTP } from "../utils/http";
 
-const AsyncImage = defineAsyncComponent(() => import("./AsyncImage.vue"));
+var router = useRouter();
+
+const AsyncImage = defineAsyncComponent(
+  () => import("../components/AsyncImage.vue")
+);
 
 const data: Ref<Exam[]> = ref([]);
 const avatarSrc = localStorage.getItem("user_avatar") || "";
@@ -23,17 +29,17 @@ const name = localStorage.getItem("user_name") || "";
 const loginName = localStorage.getItem("user_loginName") || "";
 
 async function fetchExamList(pageIndex: number) {
-  // At https://www.zhixue.com/zhixuebao/report/exam/getUserExamList?pageIndex=
-  const response = await invoke("http_get", {
-    url:
-      "https://www.zhixue.com/zhixuebao/report/exam/getUserExamList?pageIndex=" +
-      pageIndex,
-    headersMap: {
-      xtoken: localStorage.getItem("xToken") || "",
-    },
-  });
-  var responseText = String(response).trim();
-  var responseJson = JSON.parse(responseText);
+  const responseJson = await HTTP.getJson(
+    "https://www.zhixue.com/zhixuebao/report/exam/getUserExamList",
+    {
+      headersMap: {
+        xtoken: localStorage.getItem("xToken") || "",
+      },
+      query: {
+        pageIndex: pageIndex,
+      },
+    }
+  );
   return responseJson;
 }
 
@@ -83,7 +89,12 @@ function transformExamTypeClass(type: string) {
 }
 
 function getExamTypeClass(type: string) {
-  return ["exam-card-title", transformExamTypeClass(type)]
+  return ["exam-card-title", transformExamTypeClass(type)];
+}
+
+function onCardClick(selected: string) {
+  console.log(selected);
+  router.push("/exam/" + selected);
 }
 
 // useInfiniteScroll(
@@ -127,16 +138,20 @@ function getExamTypeClass(type: string) {
         >
           <div class="cards">
             <div v-for="item in data">
-              <n-card>
-                <n-h2
-                  :class="getExamTypeClass(item.examType)"
-                >
+              <n-card @click="onCardClick(item.examId)">
+                <n-h2 :class="getExamTypeClass(item.examType)">
                   <n-text>
                     {{ item.examName }}
                   </n-text>
                 </n-h2>
                 <n-p>考试ID：{{ item.examId }}</n-p>
-                <n-p>创建时间：{{ DateTime.fromMillis(item.examCreateDateTime).toFormat("yyyy-MM-dd") }}</n-p>
+                <n-p
+                  >创建时间：{{
+                    DateTime.fromMillis(item.examCreateDateTime).toFormat(
+                      "yyyy-MM-dd"
+                    )
+                  }}</n-p
+                >
               </n-card>
             </div>
           </div>
@@ -190,45 +205,5 @@ function getExamTypeClass(type: string) {
 
 .container .n-layout-sider {
   --n-color: unset !important;
-}
-
-.exam-card-title {
-  position: relative;
-  margin-left: 12px;
-}
-
-.exam-card-title::before {
-  content: "";
-  width: 4px;
-  border-radius: 2px;
-  display: inline-block;
-  position: absolute;
-  left: -12px;
-  top: 0;
-  bottom: 0;
-}
-
-.terminal-exam::before {
-  background-color: red;
-}
-
-.midterm-exam::before {
-  background-color: orange;
-}
-
-.monthly-exam::before {
-  background-color: yellow;
-}
-
-.weekly-exam::before {
-  background-color: green;
-}
-
-.unified-exam::before {
-  background-color: cyan;
-}
-
-.unknown-exam::before {
-  background-color: purple;
 }
 </style>

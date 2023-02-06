@@ -19,6 +19,7 @@ import { Buffer } from "buffer";
 import _ from "lodash";
 import { invoke } from "@tauri-apps/api/tauri";
 import { useRouter } from "vue-router";
+import { HTTP } from "../utils/http";
 
 var router = useRouter();
 
@@ -109,15 +110,16 @@ async function ssoLogin() {
     customLogoutUrl: "https%3A%2F%2Fwww.zhixue.com%2Flogin.html",
   };
 
-  const preResponse = await invoke("http_get", {
-    url: changyanSSOUrl,
+  const preResponse = await HTTP.getText(changyanSSOUrl, {
     query: changyanSSOData,
   });
   console.log(preResponse);
 
-  var preResponseText = String(preResponse).trim();
-  preResponseText = preResponseText.replaceAll("\\", "").replaceAll("'", "");
-  preResponseText = preResponseText.replaceAll("(", "").replaceAll(")", "");
+  var preResponseText = preResponse.replaceAll("\\", "")
+  preResponseText = preResponseText.replaceAll("'", "");
+  preResponseText = preResponseText.replaceAll("(", "")
+  preResponseText = preResponseText.replaceAll(")", "");
+  console.log(preResponseText);
   var preResponseJson = JSON.parse(preResponseText);
 
   console.log(preResponseJson);
@@ -143,8 +145,7 @@ async function ssoLogin() {
     execution: preResponseJson.data.execution,
   });
 
-  const response = await invoke("http_get", {
-    url: changyanSSOUrl,
+  const response = await HTTP.getText(changyanSSOUrl, {
     query: changyanSSOData,
   });
   console.log(response);
@@ -158,7 +159,7 @@ async function ssoLogin() {
   if (responseJson.code != 1001) {
     message.error(() =>
       h("div", {}, [
-        h("div", "登录失败，错误代码：Login" + responseJson.code),
+        h("div", "登录失败，错误代码：Lo" + responseJson.code),
         h("div", "附加信息：" + responseJson.data),
       ])
     );
@@ -169,33 +170,32 @@ async function ssoLogin() {
 }
 
 async function getSessionFromSt(st: string): Promise<string> {
-  const response = await invoke("http_post", {
-    url: "https://www.zhixue.com/ssoservice.jsp",
-    form: {
-      action: "login",
-      ticket: st,
-    },
-  });
+  const response = await HTTP.postText(
+    "https://www.zhixue.com/ssoservice.jsp",
+    {
+      form: {
+        action: "login",
+        ticket: st,
+      },
+    }
+  );
   console.log(response);
 
-  const tlsysSessionId: string = await invoke("get_cookie", {
-    domain: "www.zhixue.com",
-    path: "/",
-    name: "tlsysSessionId",
-  });
+  const tlsysSessionId: string = await HTTP.getCookie(
+    "www.zhixue.com",
+    "/",
+    "tlsysSessionId"
+  );
 
   console.log(tlsysSessionId);
   return tlsysSessionId;
 }
 
 async function getXToken() {
-  const response = await invoke("http_get", {
-    url: "https://www.zhixue.com/addon/error/book/index",
-  });
-  console.log(response);
-  var responseText = String(response).trim();
-  var responseJson = JSON.parse(responseText);
-
+  const responseJson = await HTTP.getJson(
+    "https://www.zhixue.com/addon/error/book/index"
+  );
+  console.log(responseJson);
   const xToken = responseJson.result;
 
   console.log(xToken);
@@ -203,12 +203,10 @@ async function getXToken() {
 }
 
 async function getBasicInfo() {
-  const response = await invoke("http_get", {
-    url: "https://www.zhixue.com/container/getCurrentUser",
-  });
-  console.log(response);
-  var responseText = String(response).trim();
-  var responseJson = JSON.parse(responseText);
+  const responseJson = await HTTP.getJson(
+    "https://www.zhixue.com/container/getCurrentUser"
+  );
+  console.log(responseJson);
 
   var id = responseJson.result.id;
   var loginName = responseJson.result.loginName;
@@ -233,16 +231,13 @@ async function getBasicInfo() {
 }
 
 async function telemetryLogin(username: string, sessionId: string) {
-  const response = await invoke("http_post", {
-    url: "https://matrix.bjbybbs.com/api/token",
+  const responseJson = await HTTP.postJson("https://matrix.bjbybbs.com/api/token", {
     form: {
       username: username,
       password: sessionId,
     },
   });
-  console.log(response);
-  var responseText = String(response).trim();
-  var responseJson = JSON.parse(responseText);
+  console.log(responseJson);
 
   const telemetryToken = responseJson.access_token;
 

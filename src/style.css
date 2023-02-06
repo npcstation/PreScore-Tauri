@@ -20,3 +20,47 @@
   overflow: clip !important;
   height: 100%;
 }
+
+.n-layout-scroll-container {
+  overflow-x: clip !important;
+}
+
+.exam-card-title {
+  position: relative;
+  margin-left: 12px;
+}
+
+.exam-card-title::before {
+  content: "";
+  width: 4px;
+  border-radius: 2px;
+  display: inline-block;
+  position: absolute;
+  left: -12px;
+  top: 0;
+  bottom: 0;
+}
+
+.terminal-exam::before {
+  background-color: red;
+}
+
+.midterm-exam::before {
+  background-color: orange;
+}
+
+.monthly-exam::before {
+  background-color: yellow;
+}
+
+.weekly-exam::before {
+  background-color: green;
+}
+
+.unified-exam::before {
+  background-color: cyan;
+}
+
+.unknown-exam::before {
+  background-color: purple;
+}
