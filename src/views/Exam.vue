@@ -10,8 +10,10 @@ import {
   NText,
   NGrid,
   NGridItem,
+  NInputNumber,
+  NP,
 } from "naive-ui";
-import { computed, h, Ref, ref } from "vue";
+import { computed, h, Ref, ref, watchEffect } from "vue";
 import { useRouter } from "vue-router";
 import { HTTP } from "../utils/http";
 import { Diagnosis, Paper } from "../utils/struct";
@@ -48,6 +50,15 @@ function handleBack() {
 }
 
 const loading = ref(true);
+
+const classCount = ref(45);
+if (localStorage.getItem("classCount")) {
+  classCount.value = parseInt(localStorage.getItem("classCount") || "45");
+}
+
+watchEffect(() => {
+  localStorage.setItem("classCount", classCount.value.toString());
+});
 
 const examType = ref("");
 const processedPaperList: Ref<Paper[]> = ref([]);
@@ -175,7 +186,10 @@ const barOption = computed(() => {
       {
         dimensions: ["subject", "rank"],
         source: diagList.value.map((diag) => {
-          return [diag.subjectName, round((diag.myRank / 100) * 41)];
+          return [
+            diag.subjectName,
+            round((diag.myRank / 100) * classCount.value),
+          ];
         }),
       },
       {
@@ -224,9 +238,20 @@ fetchExamDiagnosis(props.examId);
     <n-divider> 各科情况 </n-divider>
     <n-grid :cols="hasDiag ? 10 : 6" :x-gap="16" item-responsive>
       <n-grid-item span="10 800:4" v-if="hasDiag">
-        <n-space vertical :size="[8, 16]" style="margin-bottom: 16px;">
+        <n-space vertical :size="[8, 16]" style="margin-bottom: 16px">
           <n-card>
-            <v-chart class="chart" :option="barOption" autoresize />
+            <n-space vertical :size="[8, 16]">
+              <n-space justify="center" align="center">
+                <n-p>班级人数：</n-p>
+                <n-input-number
+                  v-model:value="classCount"
+                  button-placement="both"
+                  placeholder="班级人数？"
+                  :min="1"
+                />
+              </n-space>
+              <v-chart class="chart" :option="barOption" autoresize />
+            </n-space>
           </n-card>
           <n-card>
             <v-chart class="chart" :option="radarOption" autoresize />
@@ -267,7 +292,7 @@ fetchExamDiagnosis(props.examId);
                         (el) => el.subjectCode == item.subjectCode
                       ) != 'undefined'
                     "
-                    :value="round(diagList.find((el) => el.subjectCode == item.subjectCode)?.myRank! / 100 * 41)"
+                    :value="round(diagList.find((el) => el.subjectCode == item.subjectCode)?.myRank! / 100 * classCount)"
                   >
                     <template #suffix> / {{ 41 }} </template>
                   </n-statistic>
