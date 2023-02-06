@@ -71,7 +71,7 @@
         "fullscreen": false,
         "height": 600,
         "resizable": true,
-        "title": "prescore-tauri",
+        "title": "出分啦！",
         "width": 800
       }
     ]

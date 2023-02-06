@@ -11,7 +11,6 @@ import {
 import { ref, Ref } from "vue";
 // import { useInfiniteScroll } from "@vueuse/core";
 import { defineAsyncComponent } from "vue";
-import { invoke } from "@tauri-apps/api/tauri";
 import { Exam } from "../utils/struct";
 import { DateTime } from "luxon";
 import { useRouter } from "vue-router";

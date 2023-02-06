@@ -1,9 +1,9 @@
 [package]
 name = "prescore-tauri"
-version = "0.0.0"
-description = "A Tauri App"
+version = "0.0.1"
+description = "一点小小的查分震撼"
 authors = ["you"]
-license = ""
+license = "MIT"
 repository = ""
 edition = "2021"
 rust-version = "1.57"

@@ -17,7 +17,6 @@ import { ref, computed, h } from "vue";
 import { constants, publicEncrypt } from "crypto";
 import { Buffer } from "buffer";
 import _ from "lodash";
-import { invoke } from "@tauri-apps/api/tauri";
 import { useRouter } from "vue-router";
 import { HTTP } from "../utils/http";
 
