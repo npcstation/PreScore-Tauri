@@ -6,6 +6,7 @@ import {
   NConfigProvider,
   NGlobalStyle,
   NMessageProvider,
+  NDialogProvider,
   NIcon,
   NButton,
   NLayout,
@@ -41,30 +42,32 @@ function toggleTheme() {
 
 <template>
   <n-config-provider :theme="theme">
-    <n-message-provider>
-      <n-layout>
-        <n-layout-content>
-          <router-view />
-        </n-layout-content>
-        <n-layout-footer>
-          <div class="horizontal-center footer-words">
-            <p class="inline">© 2023 GoForceX.</p>
-            <p class="inline" style="margin: 0 8px">|</p>
-            <n-button text @click="toggleTheme">
-              <template #icon>
-                <n-icon v-if="!isLight">
-                  <sun-regular />
-                </n-icon>
-                <n-icon v-if="isLight">
-                  <moon-regular />
-                </n-icon>
-              </template>
-              切换{{ themeIndicator }}主题
-            </n-button>
-          </div>
-        </n-layout-footer>
-      </n-layout>
-    </n-message-provider>
+    <n-dialog-provider>
+      <n-message-provider>
+        <n-layout>
+          <n-layout-content>
+            <router-view />
+          </n-layout-content>
+          <n-layout-footer>
+            <div class="horizontal-center footer-words">
+              <p class="inline">© 2023 GoForceX.</p>
+              <p class="inline" style="margin: 0 8px">|</p>
+              <n-button text @click="toggleTheme">
+                <template #icon>
+                  <n-icon v-if="!isLight">
+                    <sun-regular />
+                  </n-icon>
+                  <n-icon v-if="isLight">
+                    <moon-regular />
+                  </n-icon>
+                </template>
+                切换{{ themeIndicator }}主题
+              </n-button>
+            </div>
+          </n-layout-footer>
+        </n-layout>
+      </n-message-provider>
+    </n-dialog-provider>
     <n-global-style />
   </n-config-provider>
 </template>

@@ -7,6 +7,7 @@ import {
   NLayoutSider,
   NLayoutContent,
   NP,
+useDialog,
 } from "naive-ui";
 import { ref, Ref } from "vue";
 // import { useInfiniteScroll } from "@vueuse/core";
@@ -17,6 +18,7 @@ import { useRouter } from "vue-router";
 import { HTTP } from "../utils/http";
 
 var router = useRouter();
+var dialog = useDialog();
 
 const AsyncImage = defineAsyncComponent(
   () => import("../components/AsyncImage.vue")
@@ -96,6 +98,27 @@ function onCardClick(selected: string) {
   router.push("/exam/" + selected);
 }
 
+function onUserCardClick() {
+  dialog.warning({
+    title: "要退出登录吗？",
+    content: "若点击确定，将会退出账号登录。",
+    negativeText: "取消",
+    positiveText: "确定",
+    onPositiveClick: () => {
+      localStorage.removeItem("user_id");
+      localStorage.removeItem("user_name");
+      localStorage.removeItem("sessionId");
+      localStorage.removeItem("user_loginName");
+      localStorage.removeItem("xToken");
+      localStorage.removeItem("telemetryToken");
+      localStorage.removeItem("username");
+      localStorage.removeItem("user_role");
+      localStorage.removeItem("user_avatar");
+      router.push("/");
+    }
+  });
+}
+
 // useInfiniteScroll(
 //   window,
 //   () => {
@@ -112,7 +135,7 @@ function onCardClick(selected: string) {
   <div class="container" ref="dcontainer">
     <n-layout has-sider>
       <n-layout-sider content-style="padding: 24px;">
-        <n-card class="affix">
+        <n-card class="affix" hoverable @click="onUserCardClick">
           <Suspense>
             <async-image
               class="avatar"
@@ -137,7 +160,7 @@ function onCardClick(selected: string) {
         >
           <div class="cards">
             <div v-for="item in data">
-              <n-card @click="onCardClick(item.examId)">
+              <n-card @click="onCardClick(item.examId)" hoverable>
                 <n-h2 :class="getExamTypeClass(item.examType)">
                   <n-text>
                     {{ item.examName }}

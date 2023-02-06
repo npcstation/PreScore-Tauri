@@ -51,6 +51,7 @@
         "providerShortName": null,
         "signingIdentity": null
       },
+      "publisher": "PromiScore Team",
       "resources": [],
       "shortDescription": "",
       "targets": "all",
@@ -69,10 +70,10 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 600,
+        "height": 700,
         "resizable": true,
         "title": "出分啦！",
-        "width": 800
+        "width": 1000
       }
     ]
   }
