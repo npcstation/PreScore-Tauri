@@ -36,6 +36,27 @@ function getExamType(type: string) {
   }
 }
 
+function transformExamTypeClass(type: string) {
+  switch (type) {
+    case "terminalExam":
+      return "terminal-exam";
+    case "midtermExam":
+      return "midterm-exam";
+    case "monthlyExam":
+      return "monthly-exam";
+    case "weeklyExam":
+      return "weekly-exam";
+    case "unifiedExam":
+      return "unified-exam";
+    default:
+      return "unknown-exam";
+  }
+}
+
+function getExamTypeClass(type: string) {
+  return ["exam-card-title", transformExamTypeClass(type)];
+}
+
 const userScore = computed(() => {
   console.log(props.paperList);
   return props.paperList.reduce((acc, paper) => {
@@ -101,7 +122,7 @@ watchEffect(() => {
         <n-skeleton v-if="loading" :width="256" :sharp="false" size="large" />
         <n-statistic label="类型" v-else>
           <template #default>
-            <span class="exam-card-title terminal-exam">
+            <span :class="getExamTypeClass(props.examType)">
               {{ getExamType(props.examType) }}
             </span>
           </template>
