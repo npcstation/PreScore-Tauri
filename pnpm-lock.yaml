@@ -1,56 +1,129 @@
 lockfileVersion: 5.4
 
-specifiers:
-  '@tauri-apps/api': ^1.2.0
-  '@tauri-apps/cli': ^1.2.3
-  '@types/lodash': ^4.14.191
-  '@types/luxon': ^3.2.0
-  '@types/node': ^18.11.19
-  '@vicons/fa': ^0.12.0
-  '@vicons/material': ^0.12.0
-  '@vicons/utils': ^0.1.4
-  '@vitejs/plugin-vue': ^4.0.0
-  '@vueuse/components': ^9.12.0
-  '@vueuse/core': ^9.12.0
-  echarts: ^5.4.1
-  lodash: ^4.17.21
-  luxon: ^3.2.1
-  naive-ui: ^2.34.3
-  typescript: ^4.9.5
-  vfonts: ^0.0.3
-  vite: ^4.1.1
-  vite-plugin-node-polyfills: ^0.7.0
-  vue: ^3.2.47
-  vue-echarts: ^6.5.2
-  vue-router: ^4.1.6
-  vue-tsc: ^1.0.24
+importers:
 
-dependencies:
-  '@tauri-apps/api': registry.npmmirror.com/@tauri-apps/api/1.2.0
-  '@vueuse/components': registry.npmmirror.com/@vueuse/components/9.12.0_vue@3.2.47
-  '@vueuse/core': registry.npmmirror.com/@vueuse/core/9.12.0_vue@3.2.47
-  echarts: registry.npmmirror.com/echarts/5.4.1
-  lodash: registry.npmmirror.com/lodash/4.17.21
-  luxon: registry.npmmirror.com/luxon/3.2.1
-  vue: registry.npmmirror.com/vue/3.2.47
-  vue-echarts: registry.npmmirror.com/vue-echarts/6.5.2_echarts@5.4.1+vue@3.2.47
-  vue-router: registry.npmmirror.com/vue-router/4.1.6_vue@3.2.47
+  .:
+    specifiers:
+      '@types/node': ^18.11.19
+      '@vicons/fa': ^0.12.0
+      '@vicons/material': ^0.12.0
+      '@vicons/utils': ^0.1.4
+      '@vitejs/plugin-vue': ^4.0.0
+      '@vueuse/components': ^9.12.0
+      '@vueuse/core': ^9.12.0
+      naive-ui: ^2.34.3
+      typescript: ^4.9.5
+      vfonts: ^0.0.3
+      vite: ^4.1.1
+      vite-plugin-node-polyfills: ^0.7.0
+      vue: ^3.2.47
+      vue-router: ^4.1.6
+      vue-tsc: ^1.0.24
+    dependencies:
+      '@vueuse/components': registry.npmmirror.com/@vueuse/components/9.12.0_vue@3.2.47
+      '@vueuse/core': registry.npmmirror.com/@vueuse/core/9.12.0_vue@3.2.47
+      vue: registry.npmmirror.com/vue/3.2.47
+      vue-router: registry.npmmirror.com/vue-router/4.1.6_vue@3.2.47
+    devDependencies:
+      '@types/node': registry.npmmirror.com/@types/node/18.11.19
+      '@vicons/fa': registry.npmmirror.com/@vicons/fa/0.12.0
+      '@vicons/material': registry.npmmirror.com/@vicons/material/0.12.0
+      '@vicons/utils': registry.npmmirror.com/@vicons/utils/0.1.4_vue@3.2.47
+      '@vitejs/plugin-vue': registry.npmmirror.com/@vitejs/plugin-vue/4.0.0_vite@4.1.1+vue@3.2.47
+      naive-ui: registry.npmmirror.com/naive-ui/2.34.3_vue@3.2.47
+      typescript: registry.npmmirror.com/typescript/4.9.5
+      vfonts: registry.npmmirror.com/vfonts/0.0.3
+      vite: registry.npmmirror.com/vite/4.1.1_@types+node@18.11.19
+      vite-plugin-node-polyfills: registry.npmmirror.com/vite-plugin-node-polyfills/0.7.0_vite@4.1.1
+      vue-tsc: registry.npmmirror.com/vue-tsc/1.0.24_typescript@4.9.5
 
-devDependencies:
-  '@tauri-apps/cli': registry.npmmirror.com/@tauri-apps/cli/1.2.3
-  '@types/lodash': registry.npmmirror.com/@types/lodash/4.14.191
-  '@types/luxon': registry.npmmirror.com/@types/luxon/3.2.0
-  '@types/node': registry.npmmirror.com/@types/node/18.11.19
-  '@vicons/fa': registry.npmmirror.com/@vicons/fa/0.12.0
-  '@vicons/material': registry.npmmirror.com/@vicons/material/0.12.0
-  '@vicons/utils': registry.npmmirror.com/@vicons/utils/0.1.4_vue@3.2.47
-  '@vitejs/plugin-vue': registry.npmmirror.com/@vitejs/plugin-vue/4.0.0_vite@4.1.1+vue@3.2.47
-  naive-ui: registry.npmmirror.com/naive-ui/2.34.3_vue@3.2.47
-  typescript: registry.npmmirror.com/typescript/4.9.5
-  vfonts: registry.npmmirror.com/vfonts/0.0.3
-  vite: registry.npmmirror.com/vite/4.1.1_@types+node@18.11.19
-  vite-plugin-node-polyfills: registry.npmmirror.com/vite-plugin-node-polyfills/0.7.0_vite@4.1.1
-  vue-tsc: registry.npmmirror.com/vue-tsc/1.0.24_typescript@4.9.5
+  packages/tauri:
+    specifiers:
+      '@prescore/web': workspace:*
+      '@tauri-apps/api': ^1.2.0
+      '@tauri-apps/cli': ^1.2.3
+      '@types/node': ^18.11.19
+      '@vicons/fa': ^0.12.0
+      '@vicons/material': ^0.12.0
+      '@vicons/utils': ^0.1.4
+      '@vitejs/plugin-vue': ^4.0.0
+      '@vueuse/components': ^9.12.0
+      '@vueuse/core': ^9.12.0
+      naive-ui: ^2.34.3
+      typescript: ^4.9.5
+      vfonts: ^0.0.3
+      vite: ^4.1.1
+      vite-plugin-node-polyfills: ^0.7.0
+      vue: ^3.2.47
+      vue-router: ^4.1.6
+      vue-tsc: ^1.0.24
+    dependencies:
+      '@prescore/web': link:../web
+      '@tauri-apps/api': registry.npmmirror.com/@tauri-apps/api/1.2.0
+      '@vueuse/components': registry.npmmirror.com/@vueuse/components/9.12.0_vue@3.2.47
+      '@vueuse/core': registry.npmmirror.com/@vueuse/core/9.12.0_vue@3.2.47
+      vue: registry.npmmirror.com/vue/3.2.47
+      vue-router: registry.npmmirror.com/vue-router/4.1.6_vue@3.2.47
+    devDependencies:
+      '@tauri-apps/cli': registry.npmmirror.com/@tauri-apps/cli/1.2.3
+      '@types/node': registry.npmmirror.com/@types/node/18.11.19
+      '@vicons/fa': registry.npmmirror.com/@vicons/fa/0.12.0
+      '@vicons/material': registry.npmmirror.com/@vicons/material/0.12.0
+      '@vicons/utils': registry.npmmirror.com/@vicons/utils/0.1.4_vue@3.2.47
+      '@vitejs/plugin-vue': registry.npmmirror.com/@vitejs/plugin-vue/4.0.0_vite@4.1.1+vue@3.2.47
+      naive-ui: registry.npmmirror.com/naive-ui/2.34.3_vue@3.2.47
+      typescript: registry.npmmirror.com/typescript/4.9.5
+      vfonts: registry.npmmirror.com/vfonts/0.0.3
+      vite: registry.npmmirror.com/vite/4.1.1_@types+node@18.11.19
+      vite-plugin-node-polyfills: registry.npmmirror.com/vite-plugin-node-polyfills/0.7.0_vite@4.1.1
+      vue-tsc: registry.npmmirror.com/vue-tsc/1.0.24_typescript@4.9.5
+
+  packages/web:
+    specifiers:
+      '@types/lodash': ^4.14.191
+      '@types/luxon': ^3.2.0
+      '@types/node': ^18.11.19
+      '@vicons/fa': ^0.12.0
+      '@vicons/material': ^0.12.0
+      '@vicons/utils': ^0.1.4
+      '@vitejs/plugin-vue': ^4.0.0
+      '@vueuse/components': ^9.12.0
+      '@vueuse/core': ^9.12.0
+      echarts: ^5.4.1
+      lodash: ^4.17.21
+      luxon: ^3.2.1
+      naive-ui: ^2.34.3
+      typescript: ^4.9.5
+      vfonts: ^0.0.3
+      vite: ^4.1.1
+      vite-plugin-node-polyfills: ^0.7.0
+      vue: ^3.2.47
+      vue-echarts: ^6.5.2
+      vue-router: ^4.1.6
+      vue-tsc: ^1.0.24
+    dependencies:
+      '@vueuse/components': registry.npmmirror.com/@vueuse/components/9.12.0_vue@3.2.47
+      '@vueuse/core': registry.npmmirror.com/@vueuse/core/9.12.0_vue@3.2.47
+      echarts: registry.npmmirror.com/echarts/5.4.1
+      lodash: registry.npmmirror.com/lodash/4.17.21
+      luxon: registry.npmmirror.com/luxon/3.2.1
+      vue: registry.npmmirror.com/vue/3.2.47
+      vue-echarts: registry.npmmirror.com/vue-echarts/6.5.2_echarts@5.4.1+vue@3.2.47
+      vue-router: registry.npmmirror.com/vue-router/4.1.6_vue@3.2.47
+    devDependencies:
+      '@types/lodash': registry.npmmirror.com/@types/lodash/4.14.191
+      '@types/luxon': registry.npmmirror.com/@types/luxon/3.2.0
+      '@types/node': registry.npmmirror.com/@types/node/18.11.19
+      '@vicons/fa': registry.npmmirror.com/@vicons/fa/0.12.0
+      '@vicons/material': registry.npmmirror.com/@vicons/material/0.12.0
+      '@vicons/utils': registry.npmmirror.com/@vicons/utils/0.1.4_vue@3.2.47
+      '@vitejs/plugin-vue': registry.npmmirror.com/@vitejs/plugin-vue/4.0.0_vite@4.1.1+vue@3.2.47
+      naive-ui: registry.npmmirror.com/naive-ui/2.34.3_vue@3.2.47
+      typescript: registry.npmmirror.com/typescript/4.9.5
+      vfonts: registry.npmmirror.com/vfonts/0.0.3
+      vite: registry.npmmirror.com/vite/4.1.1_@types+node@18.11.19
+      vite-plugin-node-polyfills: registry.npmmirror.com/vite-plugin-node-polyfills/0.7.0_vite@4.1.1
+      vue-tsc: registry.npmmirror.com/vue-tsc/1.0.24_typescript@4.9.5
 
 packages:
 

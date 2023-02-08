@@ -7,7 +7,7 @@ import {
   NLayoutSider,
   NLayoutContent,
   NP,
-useDialog,
+  useDialog,
 } from "naive-ui";
 import { ref, Ref } from "vue";
 // import { useInfiniteScroll } from "@vueuse/core";
@@ -115,7 +115,7 @@ function onUserCardClick() {
       localStorage.removeItem("user_role");
       localStorage.removeItem("user_avatar");
       router.push("/");
-    }
+    },
   });
 }
 

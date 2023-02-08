@@ -1,10 +1,10 @@
 import { createApp } from "vue";
 import { createRouter, createWebHashHistory } from "vue-router";
 import "./style.css";
-import App from "./App.vue";
-import Login from "./views/Login.vue";
-import Dashboard from "./views/Dashboard.vue";
-import Exam from "./views/Exam.vue";
+import App from "@prescore/web/src/App.vue";
+import Login from "@prescore/web/src/views/Login.vue";
+import Dashboard from "@prescore/web/src/views/Dashboard.vue";
+import Exam from "@prescore/web/src/views/Exam.vue";
 
 const routes = [
   { path: "/", component: Login },

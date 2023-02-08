@@ -1,5 +1,5 @@
 {
-  "name": "prescore",
+  "name": "@prescore/web",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -8,15 +8,21 @@
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "tauri": "pnpm -F @prescore/tauri tauri"
+    "tauri": "tauri"
   },
   "dependencies": {
     "@vueuse/components": "^9.12.0",
     "@vueuse/core": "^9.12.0",
+    "echarts": "^5.4.1",
+    "lodash": "^4.17.21",
+    "luxon": "^3.2.1",
     "vue": "^3.2.47",
+    "vue-echarts": "^6.5.2",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.191",
+    "@types/luxon": "^3.2.0",
     "@types/node": "^18.11.19",
     "@vicons/fa": "^0.12.0",
     "@vicons/material": "^0.12.0",
